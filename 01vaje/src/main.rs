@@ -1,5 +1,3 @@
-use core::panic;
-
 /// Skupaj preverite in pokomentirajte kvize iz [učbenika](https://rust-book.cs.brown.edu/ch03-00-common-programming-concepts.html)
 
 /// ------------------------------------------------------------------------------------------------
@@ -7,12 +5,36 @@ use core::panic;
 /// Napišite funkcijo `fib`, ki sprejme začetna člena fibbonacijevega zaporedja, število `n` in vrne `n`-ti člen zaporedja
 
 fn fib(a0: u32, a1: u32, n: u32) -> u32 {
-    panic!("Not implemented");
+    if n == 0 {
+        return a0;
+    }
+    else if n == 1 {
+        return a1;
+    }
+    else {
+        return fib(a0, a1, n - 1) + fib(a0, a1, n - 2) ;
+    }
 }
-
 /// ------------------------------------------------------------------------------------------------
 
 /// Napišite funkcijo `je_prestopno`, ki za podano leto preveri, ali je prestopno
+
+fn je_prestopno(l: u32) -> bool {
+    if l % 400 == 0 {
+        return true;
+    }
+    else if l % 100 == 0 {
+        return false;
+    }
+    else if l % 4 == 0 {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
 
 /// ------------------------------------------------------------------------------------------------
 
@@ -21,13 +43,42 @@ fn fib(a0: u32, a1: u32, n: u32) -> u32 {
 // Dan, mesec, leto
 type Date = (u32, u32, u32);
 
+fn je_veljaven_datum(datum: Date) -> bool {
+    if datum.1 > 12 {
+            return false}
+    else if je_prestopno(datum.2) {
+        let d = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        if datum.0 <= d.[datum.1 - 1] {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        let d = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        else if datum.0 <= d.[datum.1 - 1] {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+
 /// ------------------------------------------------------------------------------------------------
 
 /// Napišite funkcijo `iteracija(mut start: u32, fun: fn(u32) -> u32, cond: fn(u32) -> bool) -> u32`, ki sprejme iteracijsko funkcijo, zaustavitveni pogoj in začetno vrednost.
 /// Iteracijsko funkcijo zaporedoma uporablja, dokler za rezultat ne velja zaustavitveni pogoj, in vrne prvi rezultat, ki zadošča zaustavitvenemu pogoju.
 
 fn iteracija(mut start: u32, fun: fn(u32) -> u32, cond: fn(u32) -> bool) -> u32 {
-    panic!("Not implemented");
+    if cond(start) {
+        return start;
+    }
+    else {
+        return iteracija(fun(start), fun, cond)
+    }
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -41,7 +92,13 @@ fn iteracija(mut start: u32, fun: fn(u32) -> u32, cond: fn(u32) -> bool) -> u32 
 /// 5. Ponavljamo korake 2-4
 
 fn bisekcija(mut a: f64, mut b: f64, fun: fn(f64) -> f64, prec: f64) -> f64 {
-    panic!("Not implemented");
+    c  = (a + b) / 2; 
+    if abs.fun(c) < prec {
+        return c;
+    }
+    if fun(a) * fun(c) < 0 {
+        return(a, c, fun, prec)
+    }
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -86,24 +143,9 @@ fn ordered(arr: &[u32]) -> bool {
 
 /// ------------------------------------------------------------------------------------------------
 /// Urejanje z izbiranjem
-/// Napišite funkcijo `fn selection_sort(arr: &mut [u32])`, ki uredi tabelo `arr` z uporabo algoritma urejanja z izbiranjem
-
-fn selection_sort(arr: &mut [u32]) {}
-
-/// ------------------------------------------------------------------------------------------------
-/// Napišite program, ki izpiše piramido višine `n` iz zvezdic
-
-fn pyramid(n: u32) {
-    panic!("Not implemented");
-}
-
-/// ------------------------------------------------------------------------------------------------
-/// Napišite program, ki izpiše piramido črk angleške abecede višine `n`, lahkom predpostavite, da bo n največ 26.
-///      A
-///    A B A
-///   A B C B A
-/// A B C D C B A
 /// Napišite funkcijo `fn selection_sort(mut arr: [u32])`, ki uredi tabelo `arr` z uporabo algoritma urejanja z izbiranjem
+
+fn selection_sort(mut arr: &[u32]) {}
 
 fn main() {}
 
@@ -130,5 +172,12 @@ mod tests {
         assert_eq!(fib(0, 1, 8), 21);
         assert_eq!(fib(0, 1, 9), 34);
         assert_eq!(fib(0, 1, 10), 55);
+    }
+    #[test]
+    fn test_je_prestopno() {
+        assert_eq!(je_prestopno(2013), false);
+        assert_eq!(je_prestopno(2024), true);
+        assert_eq!(je_prestopno(2000), true);
+        assert_eq!(je_prestopno(1900), false);
     }
 }

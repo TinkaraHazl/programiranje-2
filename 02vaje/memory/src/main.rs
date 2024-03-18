@@ -9,16 +9,16 @@ fn time_it<F: FnOnce() -> R, R>(f: F) -> Duration {
 fn on_stack() {
     // Narišite shemo spreminjanja sklada in kopice
     // Za vsako vrstico napiši, kolikokrat se v pomnilniku pojavi 13?
-    let mut a = [13; 100];
-    let mut b = a;
-    let q = String::from("13");
-    println!("{}", q);
-    let r = q;
-    let p = &r;
-    a[0] = 1;
+    let mut a = [13; 100]; //1
+    let b = a; //2
+    let q = String::from("13"); //3
+    println!("{}", q); 
+    let r = q; //3
+    let p = &r; //3
+    a[0] = 1; //2
     {
-        let c = &b;
-        println!("{}", c[0]);
+        let c = &b; //2
+        println!("{}", c[0]); 
     }
     println!("{}", b[0]);
     println!("{}", a[0]);
@@ -27,9 +27,15 @@ fn on_stack() {
     // println!("{}", q); // Razloži, zakaj to ne deluje
 }
 
+fn swap(a, b): u32, u32 ->  {
+    let mut l = [a, b];
+
+}
 /// Napišite funkcijo `swap`, ki zamenja vrednosti dveh celoštevilskih spremenljivk.
 fn test_swap() {
     // V spremenljivko `a` shranite vrednost 13, v spremenljivko `b` pa vrednost 42.
+    let a = 13;
+    let b = 42;
 
     // println!("a: {}, b: {}", a, b);
     // Izpiše `a: 13, b: 42`.
