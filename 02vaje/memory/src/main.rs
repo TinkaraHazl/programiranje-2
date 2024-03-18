@@ -27,80 +27,82 @@ fn on_stack() {
     // println!("{}", q); // Razloži, zakaj to ne deluje
 }
 
-fn swap(a, b): u32, u32 ->  {
-    let mut l = [a, b];
-
+fn swap(a: &mut u32, b: &mut u32) {
+    let c = *a;
+    *a = *b;
+    *b = c;
 }
+
 /// Napišite funkcijo `swap`, ki zamenja vrednosti dveh celoštevilskih spremenljivk.
 fn test_swap() {
     // V spremenljivko `a` shranite vrednost 13, v spremenljivko `b` pa vrednost 42.
-    let a = 13;
-    let b = 42;
+    let mut a = 13;
+    let mut b = 42;
 
-    // println!("a: {}, b: {}", a, b);
+    println!("a: {}, b: {}", a, b);
     // Izpiše `a: 13, b: 42`.
 
     // Naredite swap s pomočjo pomožne funkcije `swap`.
-    // ...
+    swap(&mut a, &mut b);
     //
 
-    // println!("a: {}, b: {}", a, b);
+    println!("a: {}, b: {}", a, b);
     // Izpiše `a: 42, b: 13`.
 }
 
 /// Popravite zakomentiran del spodnje funkcije, da bo deloval
 fn str_own() {
-    // let x = String::from("Hello world");
-    // let y = x
-    // println!("{}, {}", x, y);
+    let x = String::from("Hello world");
+    let y = &x;
+    println!("{}, {}", x, *y);
 }
 
 /// Popravite brez uporabe funkcije `clone`
 /// Namig: sklad in kopiranje na skladu - kodo lahko spremenite
 fn str_own2() {
-    // let x = (1, 2, (), String::from("Hello world"));
-    // let y = x;
-    // println!("{:?}, {:?}", x, y);
+    let x = (1, 2, (), String::from("Hello world"));
+    let y = &x;
+    println!("{:?}, {:?}", x, y);
 }
 
 /// Popravite spodnji dve funkciji, da bosta delovali
 
 fn wrong() {
-    // let s = String::from("Hello World");
-    // print_str(s);
-    // println!("{}", s);
+    let s = String::from("Hello World");
+    let t = print_str(s);
+    println!("{}", t);
 }
 
-fn print_str(s: String) {
-    println!("{}", s)
+fn print_str(s: String) -> String {
+    println!("{}", s);
+    return s;
 }
 
 /// ------------------------------------------------------------------------------------------------
 /// Popravite spodnjo funkcijo, da bo delovala
 fn fn1() {
-    // let s = String::from("Hello ");
+    let s = String::from("Hello ");
 
-    // let s1 = s;
+    let mut s1 = s;
 
-    // s1.push_str("World!");
+    s1.push_str("World!");
 
-    // println!("Success!");
+    println!("Success!");
 }
 
 /// ------------------------------------------------------------------------------------------------
 /// Popravite spodnjo funkcijo, da bo delovala
 
 fn fn2() {
-    // let x = Box::new(5);
+    let x = Box::new(5);
 
-    // // Popravite zgolj tukaj vmes
+    let mut y = Box::new(5);
 
-    // //
-    // *y = 4;
+    *y = 4;
 
-    // assert_eq!(*x, 5);
+    assert_eq!(*x, 5);
 
-    // println!("Success!");
+    println!("Success!");
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -208,4 +210,6 @@ fn helper3(s: &mut String) {}
 
 /// ------------------------------------------------------------------------------------------------
 
-fn main() {}
+fn main() {
+    fn2();
+}
