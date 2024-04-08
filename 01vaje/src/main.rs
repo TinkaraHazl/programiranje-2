@@ -43,28 +43,28 @@ fn je_prestopno(l: u32) -> bool {
 // Dan, mesec, leto
 type Date = (u32, u32, u32);
 
-fn je_veljaven_datum(datum: Date) -> bool {
-    if datum.1 > 12 {
-            return false}
-    else if je_prestopno(datum.2) {
-        let d = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        if datum.0 <= d.[datum.1 - 1] {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    else {
-        let d = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        else if datum.0 <= d.[datum.1 - 1] {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-}
+//fn je_veljaven_datum(datum: Date) -> bool {
+//    if datum.1 > 12 {
+//            return false}
+//    else if je_prestopno(datum.2) {
+//        let d = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+//        if datum.0 <= d[datum.1 - 1] {
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
+//    else {
+//        let d = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+//        if datum.0 <= d[datum.1 - 1] {
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
+//}
 
 
 /// ------------------------------------------------------------------------------------------------
@@ -88,17 +88,21 @@ fn iteracija(mut start: u32, fun: fn(u32) -> u32, cond: fn(u32) -> bool) -> u32 
 /// 1. Izberemo interval [a, b], kjer je f(a) * f(b) < 0
 /// 2. Izračunamo sredino intervala c = (a + b) / 2
 /// 3. Če je |f(c)| < prec ali je dolžina intervala manjša od določene natančnosti, vrnemo c
-/// 4. Če ni, izberemo nov interval [a, b] glede na predznak f(c)
+/// 4. Če ni, izberemo nov interval [a, b]  glede na predznak f(c)
 /// 5. Ponavljamo korake 2-4
 
 fn bisekcija(mut a: f64, mut b: f64, fun: fn(f64) -> f64, prec: f64) -> f64 {
-    c  = (a + b) / 2; 
-    if abs.fun(c) < prec {
-        return c;
+    let mut c  = (a + b) / 2.; 
+    while (fun(c)).abs() > prec {
+        if fun(a) * fun(c) <= 0. {
+            b = (a + c) / 2.
+        }
+        else {
+            a = (c + b) / 2.
+        };
+        c  = (a + b) / 2.; 
     }
-    if fun(a) * fun(c) < 0 {
-        return(a, c, fun, prec)
-    }
+    return c
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -115,14 +119,35 @@ fn guessing_game() {
 /// Napišite funkcijo `fn mat_mul(a: [[u32; 2]; 2], b: [[u32; 2]; 2]) -> [[u32; 2]; 2]`, ki matriki `a` in `b` zmnoži in vrne rezultat
 
 fn mat_mul(a: [[u32; 2]; 2], b: [[u32; 2]; 2]) -> [[u32; 2]; 2] {
-    panic!("Not implemented");
+    return [[a[1][1]*b[1][1]+a[1][2]*b[2][1], a[1][1]*b[1][2]+a[1][2]*b[2][2]], 
+    [a[2][1]*b[1][1]+a[2][2]*b[2][1], a[2][1]*b[1][2]+a[2][2]*b[2][2]]];
 }
 
 /// ------------------------------------------------------------------------------------------------
 /// Napišite funkcijo `ordered`, ki sprejme tabelo števil in vrne `true`, če so števila urejena (padajoče ali naraščajoče) in `false` sicer.
 
 fn ordered(arr: &[u32]) -> bool {
-    panic!("Not implemented");
+    if arr[0] <= arr[1] {
+    let mut i = 0;
+    while i <= (arr.len() - 1) {
+        if arr[i] > arr[i - 1] {
+            return false
+        }
+        else {
+            continue
+        }
+        };
+    };
+    else if arr[0] >= arr[1] {
+    while i >= (arr.len() - 1) {
+        if arr[i] > arr[i - 1] {
+            return false
+        }
+        else {
+            continue
+        };
+        };    
+    }
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -147,7 +172,10 @@ fn ordered(arr: &[u32]) -> bool {
 
 fn selection_sort(mut arr: &[u32]) {}
 
-fn main() {}
+fn main() {
+    let r = bisekcija(0., 1., identiteta, 0.1 );
+    println!("{}", r)
+}
 
 #[cfg(test)]
 mod tests {
