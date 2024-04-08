@@ -2,9 +2,10 @@ use super::models::Sequence;
 
 struct Shifted<'a, T> {
     samo_da_ni_unused_variable: Box<&'a T>,
+    
 }
 
-impl<T> Sequence<T> for Shifted<'_, T> {
+impl<T> Sequence<i64> for Shifted<'_, i64> {
     fn name(&self) -> String {
         panic!("Shifted")
     }

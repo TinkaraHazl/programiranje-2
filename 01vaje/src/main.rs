@@ -43,29 +43,16 @@ fn je_prestopno(l: u32) -> bool {
 // Dan, mesec, leto
 type Date = (u32, u32, u32);
 
-//fn je_veljaven_datum(datum: Date) -> bool {
-//    if datum.1 > 12 {
-//            return false}
-//    else if je_prestopno(datum.2) {
-//        let d = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-//        if datum.0 <= d[datum.1 - 1] {
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
-//    else {
-//        let d = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-//        if datum.0 <= d[datum.1 - 1] {
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
-//}
-
+fn je_veljaven_datum(datum: Date) -> bool {
+    if datum.1 > 12 {false}
+    else if datum.1 == 2 && je_prestopno(datum.2) {
+        datum.0 <= 29
+    }
+    else {
+        let d: [u32; 12] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        datum.0 <= d[(datum.1 - 1) as usize]
+}
+}
 
 /// ------------------------------------------------------------------------------------------------
 
@@ -74,9 +61,8 @@ type Date = (u32, u32, u32);
 
 fn iteracija(mut start: u32, fun: fn(u32) -> u32, cond: fn(u32) -> bool) -> u32 {
     if cond(start) {
-        return start;
-    }
-    else {
+        start
+    } else {
         return iteracija(fun(start), fun, cond)
     }
 }
@@ -119,35 +105,31 @@ fn guessing_game() {
 /// Napišite funkcijo `fn mat_mul(a: [[u32; 2]; 2], b: [[u32; 2]; 2]) -> [[u32; 2]; 2]`, ki matriki `a` in `b` zmnoži in vrne rezultat
 
 fn mat_mul(a: [[u32; 2]; 2], b: [[u32; 2]; 2]) -> [[u32; 2]; 2] {
-    return [[a[1][1]*b[1][1]+a[1][2]*b[2][1], a[1][1]*b[1][2]+a[1][2]*b[2][2]], 
-    [a[2][1]*b[1][1]+a[2][2]*b[2][1], a[2][1]*b[1][2]+a[2][2]*b[2][2]]];
+    return [[a[0][0]*b[0][0]+a[0][1]*b[1][0], a[0][0]*b[0][1]+a[0][1]*b[1][1]], 
+    [a[1][0]*b[0][0]+a[1][1]*b[1][0], a[1][0]*b[0][1]+a[1][1]*b[1][1]]];
 }
 
 /// ------------------------------------------------------------------------------------------------
 /// Napišite funkcijo `ordered`, ki sprejme tabelo števil in vrne `true`, če so števila urejena (padajoče ali naraščajoče) in `false` sicer.
 
 fn ordered(arr: &[u32]) -> bool {
-    if arr[0] <= arr[1] {
-    let mut i = 0;
-    while i <= (arr.len() - 1) {
-        if arr[i] > arr[i - 1] {
-            return false
+    let dolzina = arr.len();
+    if dolzina <= 2 {return true}
+    else if arr[0] <= arr[1] {
+        for i in 1..dolzina-1 {
+            if arr[i] > arr[i + 1] {
+                return false
+            }
         }
-        else {
-            continue
-        }
-        };
-    };
-    else if arr[0] >= arr[1] {
-    while i >= (arr.len() - 1) {
-        if arr[i] > arr[i - 1] {
-            return false
-        }
-        else {
-            continue
-        };
-        };    
     }
+    else if arr[0] >= arr[1] {
+        for i in 1..dolzina-1 {
+            if arr[i] < arr[i + 1] {
+                return false
+            }
+        }
+    }
+    return true
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -158,6 +140,15 @@ fn ordered(arr: &[u32]) -> bool {
 /// 2. Če je `n` liho, potem je `x^n = (x^2)^(n/2)`
 /// 3. Če je `n = 0`, potem je `x^n = 1`
 
+fn pow(x: u32, n: u32) -> u32 {
+    if n % 2 == 1 {
+        return pow(pow(x, 2), n / 2)
+    }
+    else {
+        return x.pow(n / 2).pow(2)
+    }
+}
+
 /// ------------------------------------------------------------------------------------------------
 /// Prepišite hitro potenciranje v iterativno obliko
 
@@ -166,15 +157,43 @@ fn ordered(arr: &[u32]) -> bool {
 /// Napišite funkcijo `fn pow_mod(mut x: u32, mut n: u32, m: u32) -> u32`, ki izračuna `x` na potenco `n` in vrne ostanek po deljenju z `m`
 /// Postopek je enak, le da pri vsakem izračunu vrnemo ostanek pri deljenju z `m`
 
+fn pow_mod(x: u32, n: u32, m: u32) -> u32 {
+    if n % 2 == 1 {
+        return pow(pow(x, 2) % m, n / 2) % m
+    }
+    else {
+        return (x.pow(n / 2) % m ).pow(2) % m
+    }
+}
+
 /// ------------------------------------------------------------------------------------------------
 /// Urejanje z izbiranjem
 /// Napišite funkcijo `fn selection_sort(mut arr: [u32])`, ki uredi tabelo `arr` z uporabo algoritma urejanja z izbiranjem
 
-fn selection_sort(mut arr: &[u32]) {}
+fn selection_sort(arr: &mut [u32]) -> &[u32] {
+    let dolzina = arr.len();
+    fn min_index(array: &[u32]) -> usize {
+        let mut min_ind = 0;
+        let mut min = array[0];
+        for i in 0..array.len() {
+            if array[i] < min {
+                min = array[i];
+                min_ind = i;
+            }
+        }
+    return min_ind
+    }
+    for i in 0..(dolzina - 1) {
+        let neurejena = &arr[i..dolzina];
+        let n_mini = min_index(neurejena) + i;
+        arr.swap(i, n_mini);
+    }
+    println!("{:?}", &arr);
+    return arr
+}
 
 fn main() {
-    let r = bisekcija(0., 1., identiteta, 0.1 );
-    println!("{}", r)
+    selection_sort(&mut[2,3,4,2,1]);
 }
 
 #[cfg(test)]
@@ -207,5 +226,17 @@ mod tests {
         assert_eq!(je_prestopno(2024), true);
         assert_eq!(je_prestopno(2000), true);
         assert_eq!(je_prestopno(1900), false);
+    }
+
+    #[test]
+    fn test_ordered () {
+        assert_eq!(ordered(&[1, 1, 2]), true);
+        assert_eq!(ordered(&[2, 2]), true);
+        assert_eq!(ordered(&[4, 3]), true);
+    }
+
+    #[test]
+    fn test_selection_sort () {
+        assert_eq!(selection_sort(&mut[2,3,4,2,1]), &mut[1, 2, 2, 3, 4])
     }
 }

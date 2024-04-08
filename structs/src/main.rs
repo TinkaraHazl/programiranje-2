@@ -28,7 +28,7 @@ impl AritmeticnoZaporedje {
 }
 
 impl AritmeticnoZaporedje {
-    fn n_th(n, self) -> i64 {
+    fn n_th(&self, n) -> i64 {
         let mut i = 1;
         while i <= n {
             self.next();
@@ -36,7 +36,23 @@ impl AritmeticnoZaporedje {
         };
         return self.trenutno
     }
+    fn reset(&self) -> Self {
+        Self {
+        zacetno : self.zacetno,
+        skok : self.skok,
+        trenutno : self.zacetno
+        }
+        
+    }
+    fn current(&self) -> i64 {
+        return self.trenutno
+    }
+    fn sum(&self, n:i32) -> i64 {
+        
+        return 3
+    }
 }
+
 
 
 

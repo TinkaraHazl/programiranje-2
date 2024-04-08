@@ -3,7 +3,7 @@ impl AExpr {
     pub fn evaluate(&self) -> i64 {
         // Tukaj lahko predpostavite, da spremenljivke ne obstajajo
         panic!("Implement variable evaluation")
-    }
+    };
 
     pub fn evaluate_map(
         &self,
