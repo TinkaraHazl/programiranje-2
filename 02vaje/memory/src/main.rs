@@ -117,7 +117,7 @@ fn fn3() {
     let _s = t.1;
 
     // Izpišite čim večji del t-ja.
-    println!("????????");
+    println!("{} {} {}", &t.0, _s, &t.2);
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -125,6 +125,7 @@ fn fn3() {
 fn fn4() {
     let x = 5;
     // Izpišite naslov spremenljivke x
+    println!("{:p}", &x)
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -134,7 +135,7 @@ fn fn5() {
     let y = &x;
 
     // Popravite spodnjo vrstico, da bo bo enakost držala
-    // assert_eq!(13, y);
+    assert_eq!(13, *y);
 }
 
 /// ------------------------------------------------------------------------------------------------
@@ -143,7 +144,7 @@ fn fn5() {
 fn fn6() {
     let mut s = String::from("hello, ");
 
-    // helper(s);
+    helper(&s);
 
     println!("Success!");
 }
@@ -157,7 +158,7 @@ fn helper(s: &String) {}
 fn fn7() {
     let mut s = String::from("hello, ");
 
-    // helper2(s);
+    helper2(&mut s);
 
     println!("Success!");
 }
@@ -170,40 +171,42 @@ fn helper2(s: &mut String) {
 
 /// Pojasnite, zakaj spodnja koda ne deluje
 fn fn8() {
-    // let mut s = String::from("hello, ");
-
-    // let p = &mut s;
-
-    // p.push_str("world");
-
-    // println!("Success! {}", p);
-    // println!("Success! {}", s);
-    // p.push_str("!");
+    //let mut s = String::from("hello, ");
+//
+    //let p = &mut s; //mutable borrow
+//
+    //p.push_str("world");
+//
+    //println!("Success! {}", p);
+    //println!("Success! {}", s); //immutable borrow occurs
+    //p.push_str("!");//mutable borrow used here
 }
 
 /// ------------------------------------------------------------------------------------------------
 /// Pojasnite, zakaj spodnja koda ne deluje in jo popravite
 /// Pojasnite tudi zakaj je popravek ok
 
+//pred popravkom: dvakrat smo si spremenljivo sposodili s in poskusili uporabiti obe sposojenki
 fn fn9() {
-    // let mut s = String::from("hello");
+    let mut s = String::from("hello");
 
-    // let r1 = &mut s;
-    // let r2 = &mut s;
+    let r1 = &mut s;
+    let r2 = &mut s;
 
-    // println!("{}, {}", r1, r2);
+    println!("{}, {}", r2, r2);
 
-    // println!("Success!");
+    println!("Success!");
 }
+//po popravku: prve sposojenke ne uporabljamo več
 
 /// ------------------------------------------------------------------------------------------------
 fn fn10() {
     // // Popravite spodnjo vrstico
-    // let s = String::from("hello, ");
+    let mut s = String::from("hello, ");
 
-    // helper3(&mut s);
+    helper3(&mut s);
 
-    // println!("Success!");
+    println!("Success!");
 }
 
 fn helper3(s: &mut String) {}
@@ -211,5 +214,5 @@ fn helper3(s: &mut String) {}
 /// ------------------------------------------------------------------------------------------------
 
 fn main() {
-    fn2();
+    fn10();
 }
