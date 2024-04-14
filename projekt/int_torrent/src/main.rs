@@ -11,8 +11,8 @@ use std::collections::HashMap;
 
 fn main() {
     // Naredite nekaj zaporedij
-    // let s1 = sequence::models::Constant::new(1);
-    // let s2 = sequence::models::Constant::new(2);
+    let s1 = sequence::models::Constant::new(1);
+    let s2 = sequence::models::Constant::new(2);
     // let s3 = Arithmetic::new(0, 10);
     // let s3_ = Arithmetic::new(0, 10);
     // let s4 = sequence::shifted::shifted_sequence(&*s3, 5);

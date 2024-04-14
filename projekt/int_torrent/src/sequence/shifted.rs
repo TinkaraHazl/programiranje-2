@@ -2,7 +2,6 @@ use super::models::Sequence;
 
 struct Shifted<'a, T> {
     samo_da_ni_unused_variable: Box<&'a T>,
-    
 }
 
 impl<T> Sequence<i64> for Shifted<'_, i64> {
