@@ -4,15 +4,16 @@ use crate::sequence::models::Sequence;
 pub struct Constant<T> {
     vrednost : T,
 }
-
-impl Constant<i64> {
-    pub fn new(c : i64) -> Constant<i64> {
+impl<T> Constant<T> {
+    pub fn new(c : T) -> Constant<T> {
         Constant {
-            vrednost,
+            vrednost : c,
         }
     }
+}
 
-    pub fn name(&self) -> String {
+impl Sequence<i64> for Constant<i64> {
+    fn name(&self) -> String {
         let ime = format!("{}", self.vrednost);
         return ime
     }
@@ -21,8 +22,8 @@ impl Constant<i64> {
         return self.vrednost
     }
 
-    fn k_th(&self, k: usize) -> i64 {
-        return self.vrednost
+    fn k_th(&self, k: usize) -> Option<i64> {
+        return Some(self.vrednost)
     }
 
     fn contains(&self, item: i64) -> bool {

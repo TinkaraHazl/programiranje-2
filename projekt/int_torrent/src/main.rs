@@ -11,16 +11,16 @@ use std::collections::HashMap;
 
 fn main() {
     // Naredite nekaj zaporedij
-    let s1 = sequence::models::Constant::new(1);
-    let s2 = sequence::models::Constant::new(2);
-    // let s3 = Arithmetic::new(0, 10);
-    // let s3_ = Arithmetic::new(0, 10);
+    let s1 = sequence::constant::Constant::new(1);
+    let s2 = sequence::constant::Constant::new(2);
+    let s3 = Arithmetic::new(0, 10);
+    let s3_ = Arithmetic::new(0, 10);
     // let s4 = sequence::shifted::shifted_sequence(&*s3, 5);
 
-    // println!("{}", s3.name());
+    println!("{}", s3.name());
 
-    // println!("{:?}", s4.k_th(10));
-    // println!("{:?}", s3.name());
+    println!("{:?}", s4.k_th(10));
+    println!("{:?}", s3.name());
 
     // Kombinirano zaporedje
 
