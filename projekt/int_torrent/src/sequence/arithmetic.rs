@@ -24,8 +24,8 @@ impl Sequence<i64> for Arithmetic<i64> {
         return self.zacetna
     }
 
-    fn k_th(&self, n: i64) -> Option<i64> {
-        return Some(self.zacetna + n * self.razlika)
+    fn k_th(&self, k: usize) -> Option<i64> {
+        return Some((self.zacetna + (k as i64) * self.razlika).try_into().unwrap())
     }
 
     fn contains(&self, item: i64) -> bool {

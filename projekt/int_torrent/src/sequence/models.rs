@@ -9,7 +9,7 @@ pub trait Sequence<T> {
     //fn next(&mut self) -> Option<T>;
     // fn k_next(&mut self, k: usize) -> Option<T>;
 
-    fn k_th(&self, k: isize) -> Option<T>;
+    fn k_th(&self, k: usize) -> Option<T>;
 
     fn contains(&self, item: T) -> bool;
 }
