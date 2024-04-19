@@ -13,3 +13,16 @@ pub trait Sequence<T> {
 
     fn contains(&self, item: T) -> bool;
 }
+
+//struct ArithSequenceIter {
+//    zaporedje: ArithSequence,
+//    trenutno_clen: u64,
+//}
+//
+//impl Iterator for ArithSequenceiter {
+//    type Item = i64;
+//    fn next(&mut self) -> Option<Self::Item> {
+//        Some(self.zaporedje.k_ti_clen(self.trenutni_clen))
+//    };
+//    
+//}

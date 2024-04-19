@@ -30,7 +30,7 @@ impl<T> Combined<'_, T> {
     }
 }
 
-pub fn combined_sequence(
+pub fn combined_sequence<S : Sequence>(
     sequences: Vec<Box<&dyn Sequence<i64>>>,
     expression: AExpr,
 ) -> Box<dyn Sequence<i64> + '_> {
