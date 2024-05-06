@@ -1,7 +1,13 @@
 // Napišite različne funkcije, ki kot argument sprejmejo zaprtje (closure) in ga pokličejo z različnimi argumenti, ki ustrezajo sledečim ocaml tipom:
 // Tip zaprtja naj bo čim bolj splošen (Fn, FnOnce, FnMut).
 //  (int -> int) -> int -> int
+//fn Fn(f : (i32 -> i32), i : i32) -> i32 {
+//    f(i)
+//}
 //  ('a -> 'b) -> 'a -> 'b
+
+fn main() {println!("{:?}", dolzina(vec![("bavbav").to_string(), ("mjav").to_string(), ("skiro").to_string()]))}
+
 //  ('a -> 'a -> 'b) -> 'a -> 'a -> 'b
 //  map: ('a -> 'b) -> 'a list -> 'b list  (Uporabite Vec<T> namesto list, predpostavite, da funkcija ne spremeni elementov seznama)
 //  map_and_mutate: ('a -> 'b) -> 'a list -> 'b list // Definirajte funkcijo tako, da lahko zaprtje spremeni elemente seznama
@@ -14,10 +20,33 @@
 
 // Napišite funkcijo, ki sprejme vektor XYZ in s pomočjo iteratorja naredi W
 // števil in izpiše vsako v svojo vrstico
+
+fn izpisi(v : Vec<i32>) -> () {
+    v.iter().for_each(|x| println!("{}", x));
+}
+
 // nizov in izpiše njihove dolžine
+
+fn dolzine(v : Vec<String>) {
+   v.iter().map(|x| x.len()).for_each(|x| println!("{}", x));
+}
+
 // nizov in vrne vsoto njihovih dolžin
+
+fn dolzina(v : Vec<String>) -> usize {
+    v.iter().map(|x| x.len()).sum()
+}
+
 // vektor parov (i32, i32) in vrne vsoto njihovih pozitivnih produktov
+
+fn vsota_pozitivnih_produktov(v : Vec<(i32, i32)>) -> i32 {
+    v.iter().map(|(i, j)| i * j).filter(|x| x.is_positive()).sum()
+}
+
 // dva vektorja <i32> in vrne vektor, ki vsebuje vsote parov
+
+fn vsote_parov(v1 : Vec<i32>, v2 : Vec<i32>) -> Vec<i32>
+
 // dva vektorja <i32> in vrne vsoto poparjenih pozitivni produktov s pomočjo ene izmed prejšnjih nalog
 // vektor Option<T> in izpiše vse T-je
 // vektor Option<T> in vrne število Some-ov
@@ -32,14 +61,14 @@ pub fn capitalize_words_string(words: &[&str]) -> String {
 // Namig: fold, reduce, `..`...
 
 // -------------------------------------------------------------------------------------------------
-/// Dodatno:
+// Dodatno:
 // Koda vzeta iz googlvih rust vaj:
 // Vse se da lepo narediti samo z iteratorji (brez indeksov, brez for zank, brez mutabilnosti)
 /*
-/// Calculate the differences between elements of `values` offset by `offset`,
-/// wrapping around from the end of `values` to the beginning.
-///
-/// Element `n` of the result is `values[(n+offset)%len] - values[n]`.
+// Calculate the differences between elements of `values` offset by `offset`,
+// wrapping around from the end of `values` to the beginning.
+//
+// Element `n` of the result is `values[(n+offset)%len] - values[n]`.
 fn offset_differences<N>(offset: usize, values: Vec<N>) -> Vec<N>
 where
     N: Copy + std::ops::Sub<Output = N>,
